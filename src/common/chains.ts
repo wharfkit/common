@@ -1,4 +1,8 @@
-import {Checksum256, Checksum256Type, Struct} from '@wharfkit/antelope'
+import {APIClientOptions, Checksum256, Checksum256Type, Struct} from '@wharfkit/antelope'
+
+import {APIClient as LeapAPIClient} from '@wharfkit/apiclient-leap'
+import {APIClient as TelosAPIClient} from '@wharfkit/apiclient-leap'
+import {APIClient as WAXAPIClient} from '@wharfkit/apiclient-wax'
 
 import {ExplorerDefinition} from './explorer'
 import {Logo} from './logo'
@@ -9,7 +13,7 @@ import type {ExplorerDefinitionType, LogoType} from './types'
  * The information required to interact with a given chain.
  */
 @Struct.type('chain_definition')
-export class ChainDefinition extends Struct {
+export class ChainDefinition<ChainIndice extends ChainIndices = 'Antelope'> extends Struct {
     /**
      * The chain ID.
      */
@@ -30,12 +34,12 @@ export class ChainDefinition extends Struct {
      */
     @Struct.field(ExplorerDefinition, {optional: true}) declare explorer?: ExplorerDefinitionType
 
-    static from(data) {
+    static from<ChainIndice extends ChainIndices = 'Antelope'>(data) {
         return super.from({
             ...data,
             explorer: data.explorer ? ExplorerDefinition.from(data.explorer) : undefined,
             logo: data.logo ? Logo.from(data.logo) : undefined,
-        }) as ChainDefinition
+        }) as ChainDefinition<ChainIndice>
     }
 
     get name() {
@@ -59,12 +63,64 @@ export class ChainDefinition extends Struct {
         }
         return undefined
     }
+
+    public getClient(options?: APIClientOptions): ClientType<ChainIndice> {
+        // Create options that default to URL defined in ChainDefinition
+        const opts = {
+            url: this.url,
+            ...options,
+        }
+        // Determine if we have a custom client for this chain
+        const indice = chainIdsToIndices.get(String(this.id))
+        if (indice) {
+            const client = ChainClients[indice]
+            if (client) {
+                // Return defined client
+                return new client(opts) as ClientType<ChainIndice>
+            }
+        }
+        // Return generic APIClient when unknown blockchain
+        return new LeapAPIClient(opts) as ClientType<ChainIndice>
+    }
+}
+
+// Type exports based on ChainClients
+export type ClientType<T> =
+    // Override WAX
+    T extends 'WAX'
+        ? WAXAPIClient
+        : // Override WAX Testnet
+        T extends 'WAXTestnet'
+        ? WAXAPIClient
+        : // Override Telos
+        T extends 'Telos'
+        ? TelosAPIClient
+        : // Override Telos Testnet
+        T extends 'TelosTestnet'
+        ? TelosAPIClient
+        : // Default to Leap
+          LeapAPIClient
+
+export type ChainClientsTypes<I extends string> = {
+    [K in I]: typeof LeapAPIClient
+}
+
+/**
+ * A mapping of specific chains to their APIClients
+ */
+export const ChainClients: Partial<ChainClientsTypes<ChainIndices>> = {
+    Antelope: LeapAPIClient,
+    Telos: TelosAPIClient,
+    TelosTestnet: TelosAPIClient,
+    WAX: WAXAPIClient,
+    WAXTestnet: WAXAPIClient,
 }
 
 /**
  * A list of string-based chain names to assist autocompletion
  */
 export type ChainIndices =
+    | 'Antelope'
     | 'EOS'
     | 'FIO'
     | 'FIOTestnet'
@@ -84,6 +140,7 @@ export type ChainIndices =
  * List of human readable chain names based on the ChainIndices type.
  */
 export const ChainNames: Record<ChainIndices, string> = {
+    Antelope: 'Unknown Antelope Chain',
     EOS: 'EOS',
     FIO: 'FIO',
     FIOTestnet: 'FIO (Testnet)',
@@ -103,7 +160,7 @@ export const ChainNames: Record<ChainIndices, string> = {
 /**
  * An exported list of ChainDefinition entries for select chains.
  */
-export const Chains: Record<ChainIndices, ChainDefinition> = {
+export const Chains = {
     EOS: ChainDefinition.from({
         id: 'aca376f206b8fc25a6ed44dbdc66547c36c6c33e3a119ffbeaef943642f0e906',
         url: 'https://eos.greymass.com',
@@ -160,7 +217,7 @@ export const Chains: Record<ChainIndices, ChainDefinition> = {
         id: '71ee83bcf52142d61019d95f9cc5427ba6a0d7ff8accd9e2088ae2abeaf3d3dd',
         url: 'https://proton-testnet.greymass.com',
     }),
-    Telos: ChainDefinition.from({
+    Telos: ChainDefinition.from<'Telos'>({
         id: '4667b205c6838ef70ff7988f6e8257e8be0e1284a2f59699054a018f743b1d11',
         url: 'https://telos.greymass.com',
         explorer: {
@@ -168,11 +225,11 @@ export const Chains: Record<ChainIndices, ChainDefinition> = {
             suffix: '',
         },
     }),
-    TelosTestnet: ChainDefinition.from({
+    TelosTestnet: ChainDefinition.from<'TelosTestnet'>({
         id: '1eaa0824707c8c16bd25145493bf062aecddfeb56c736f6ba6397f3195f33c9f',
         url: 'https://telos.greymass.com',
     }),
-    WAX: ChainDefinition.from({
+    WAX: ChainDefinition.from<'WAX'>({
         id: '1064487b3cd1a897ce03ae5b6a865651747e2e152090f99c1d19d44e01aea5a4',
         url: 'https://wax.greymass.com',
         explorer: {
@@ -180,7 +237,7 @@ export const Chains: Record<ChainIndices, ChainDefinition> = {
             suffix: '',
         },
     }),
-    WAXTestnet: ChainDefinition.from({
+    WAXTestnet: ChainDefinition.from<'WAXTestnet'>({
         id: 'f16b1833c747c43682f4386fca9cbb327929334a762755ebec17f6f23c9b8a12',
         url: 'https://waxtestnet.greymass.com',
     }),

@@ -3,7 +3,7 @@ import typescript from '@rollup/plugin-typescript'
 import cleanup from 'rollup-plugin-cleanup'
 import pkg from './package.json'
 
-const external = Object.keys(pkg.peerDependencies)
+const external = [...Object.keys(pkg.dependencies), ...Object.keys(pkg.peerDependencies)]
 
 /** @type {import('rollup').RollupOptions} */
 export default [
