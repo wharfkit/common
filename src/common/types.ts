@@ -1,6 +1,6 @@
 import {Checksum256Type} from '@wharfkit/antelope'
 
-import {ChainDefinition} from './chains'
+import {ChainDefinition, ChainKeys} from './chains'
 import {ExplorerDefinition} from './explorer'
 import {Logo} from './logo'
 
@@ -12,8 +12,14 @@ export type ExplorerDefinitionType =
     | ExplorerDefinition
     | {prefix: string; suffix: string; url: (id: string) => string}
 
-export type ChainDefinitionType =
-    | ChainDefinition
-    | {id: Checksum256Type; url: string; explorer?: ExplorerDefinitionType; logo?: LogoType}
+export type ChainDefinitionType<T extends ChainKeys = 'Antelope'> =
+    | ChainDefinition<T>
+    | {
+          id: Checksum256Type
+          url: string
+          name?: string
+          explorer?: ExplorerDefinitionType
+          logo?: LogoType
+      }
 
 export type LocaleDefinitions = Record<string, any>

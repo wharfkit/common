@@ -1344,7 +1344,7 @@
     hash.js "^1.0.0"
     tslib "^2.0.3"
 
-"@wharfkit/antelope@^0.9.0-rc1", "@wharfkit/antelope@^0.9.0-rc2":
+"@wharfkit/antelope@^0.9.0-rc2":
   version "0.9.0-rc2"
   resolved "https://registry.yarnpkg.com/@wharfkit/antelope/-/antelope-0.9.0-rc2.tgz#a8fe53fb7874e4af2b5bd9982c43bbe117f57037"
   integrity sha512-9uvPHv4TZIKdtrnI1ECfER0k/+cgHfLzOoho3psGbxxbbvoUPhyRyFBY2uFWEYlLp230X5H9PMpoUKc4cidoGA==
@@ -1356,21 +1356,29 @@
     pako "^2.1.0"
     tslib "^2.0.3"
 
-"@wharfkit/apiclient-leap@^4.0.3":
-  version "4.0.3"
-  resolved "https://registry.yarnpkg.com/@wharfkit/apiclient-leap/-/apiclient-leap-4.0.3.tgz#067eb38753bb022906205974062f10d1d476b1a2"
-  integrity sha512-H4kMdG628uzUN2ZmN+umIMSGA2DR8Hc5Kg0SwVolYIQlmkPLYd9CGLrRsMDqhLVeE+nGLm/w7an3nvNndLQb3g==
+"@wharfkit/apiclient-leap@^4.0.5":
+  version "4.0.5"
+  resolved "https://registry.yarnpkg.com/@wharfkit/apiclient-leap/-/apiclient-leap-4.0.5.tgz#fcfee265f098dd165d68c1116077f0e651349cb2"
+  integrity sha512-7dR5tL5MRL/P9dreLF7a4qXdhVHkWdGUapdVaKu04dzMnTO8BfVvwnIP6N2oxnBdzVdLjnAClPK9+ye7KI58GA==
   dependencies:
-    "@wharfkit/antelope" "^0.9.0-rc1"
+    "@wharfkit/antelope" "^0.9.0-rc2"
     pako "^2.1.0"
     tslib "^2.0.3"
 
-"@wharfkit/apiclient-wax@^4.0.2":
-  version "4.0.2"
-  resolved "https://registry.yarnpkg.com/@wharfkit/apiclient-wax/-/apiclient-wax-4.0.2.tgz#e54699df745218142f4f0cfae8d5d72ecfded9dd"
-  integrity sha512-U92Qmnjsb/q50GlFYBkQ/XsRBTFszGoQUwyNS3X/Hs4CygIp4g4QM5DnvZeOoHMImDZAlcpnpymbZHS3uxUzVw==
+"@wharfkit/apiclient-telos@^4.0.5":
+  version "4.0.5"
+  resolved "https://registry.yarnpkg.com/@wharfkit/apiclient-telos/-/apiclient-telos-4.0.5.tgz#a3414c0a6055ae8356c8f5568360e6b7105262bb"
+  integrity sha512-pz71RwCLyITJUOE5dBumGWgq3aS9RWp2e20R7LZyUuy+oxPrBJrfpIQWuoq5V5FRZkYJ2a1j89CLB1aNIWcF/A==
   dependencies:
-    "@wharfkit/apiclient-leap" "^4.0.3"
+    "@wharfkit/apiclient-leap" "^4.0.5"
+    tslib "^2.0.3"
+
+"@wharfkit/apiclient-wax@^4.0.5":
+  version "4.0.5"
+  resolved "https://registry.yarnpkg.com/@wharfkit/apiclient-wax/-/apiclient-wax-4.0.5.tgz#5612df17944df308fbf48983af2963b2c85c288a"
+  integrity sha512-ZAPO09/Xeqe9eZ6iLOhemmcbcMDgqP8SHPEUjGjCLut21Q9L1YtSS3aBE2UtBZgFUJoDBTAKV5Fks+AkCbWP8Q==
+  dependencies:
+    "@wharfkit/apiclient-leap" "^4.0.5"
     tslib "^2.0.3"
 
 "@wharfkit/common@^1.1.0":
