@@ -170,7 +170,7 @@ export const Chains: Record<ChainIndices, ChainDefinition> = {
     }),
     TelosTestnet: ChainDefinition.from({
         id: '1eaa0824707c8c16bd25145493bf062aecddfeb56c736f6ba6397f3195f33c9f',
-        url: 'https://telos.greymass.com',
+        url: 'https://telostestnet.greymass.com',
     }),
     WAX: ChainDefinition.from({
         id: '1064487b3cd1a897ce03ae5b6a865651747e2e152090f99c1d19d44e01aea5a4',
