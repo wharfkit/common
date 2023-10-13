@@ -1,4 +1,12 @@
-import {Checksum256, Checksum256Type, Struct} from '@wharfkit/antelope'
+import {
+    API,
+    Checksum256,
+    Checksum256Type,
+    Float64,
+    Int64,
+    Struct,
+    TimePoint,
+} from '@wharfkit/antelope'
 
 import {ExplorerDefinition} from './explorer'
 import {Logo} from './logo'
@@ -9,7 +17,10 @@ import type {ExplorerDefinitionType, LogoType} from './types'
  * The information required to interact with a given chain.
  */
 @Struct.type('chain_definition')
-export class ChainDefinition extends Struct {
+export class ChainDefinition<
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    AccountDataType extends API.v1.AccountObject = API.v1.AccountObject
+> extends Struct {
     /**
      * The chain ID.
      */
@@ -30,12 +41,12 @@ export class ChainDefinition extends Struct {
      */
     @Struct.field(ExplorerDefinition, {optional: true}) declare explorer?: ExplorerDefinitionType
 
-    static from(data) {
+    static from<T extends API.v1.AccountObject = API.v1.AccountObject>(data): ChainDefinition<T> {
         return super.from({
             ...data,
             explorer: data.explorer ? ExplorerDefinition.from(data.explorer) : undefined,
             logo: data.logo ? Logo.from(data.logo) : undefined,
-        }) as ChainDefinition
+        }) as ChainDefinition<T>
     }
 
     get name() {
@@ -100,98 +111,135 @@ export const ChainNames: Record<ChainIndices, string> = {
     UX: 'UX Network',
 }
 
+@Struct.type('telos_account_voter_info')
+export class TelosAccountVoterInfo extends API.v1.AccountVoterInfo {
+    @Struct.field(Int64) last_stake!: Int64
+}
+
+@Struct.type('telos_account_object')
+export class TelosAccountObject extends API.v1.AccountObject {
+    @Struct.field(TelosAccountVoterInfo, {optional: true})
+    declare voter_info?: TelosAccountVoterInfo
+}
+
+@Struct.type('wax_account_voter_info')
+export class WAXAccountVoterInfo extends API.v1.AccountVoterInfo {
+    @Struct.field(Float64) declare unpaid_voteshare: Float64
+    @Struct.field(TimePoint) declare unpaid_voteshare_last_updated: TimePoint
+    @Struct.field(Float64) declare unpaid_voteshare_change_rate: Float64
+    @Struct.field(TimePoint) declare last_claim_time: TimePoint
+}
+
+@Struct.type('wax_account_object')
+export class WAXAccountObject extends API.v1.AccountObject {
+    @Struct.field(WAXAccountVoterInfo, {optional: true}) declare voter_info?: WAXAccountVoterInfo
+}
+
 /**
  * An exported list of ChainDefinition entries for select chains.
  */
-export const Chains: Record<ChainIndices, ChainDefinition> = {
-    EOS: ChainDefinition.from({
+export namespace Chains {
+    export const EOS = ChainDefinition.from({
         id: 'aca376f206b8fc25a6ed44dbdc66547c36c6c33e3a119ffbeaef943642f0e906',
         url: 'https://eos.greymass.com',
         explorer: {
             prefix: 'https://bloks.io/transaction/',
             suffix: '',
         },
-    }),
-    FIO: ChainDefinition.from({
+    })
+
+    export const FIO = ChainDefinition.from({
         id: '21dcae42c0182200e93f954a074011f9048a7624c6fe81d3c9541a614a88bd1c',
         url: 'https://fio.greymass.com',
         explorer: {
             prefix: 'https://fio.bloks.io/transaction/',
             suffix: '',
         },
-    }),
-    FIOTestnet: ChainDefinition.from({
+    })
+
+    export const FIOTestnet = ChainDefinition.from({
         id: 'b20901380af44ef59c5918439a1f9a41d83669020319a80574b804a5f95cbd7e',
         url: 'https://fiotestnet.greymass.com',
         explorer: {
             prefix: 'https://fio-test.bloks.io/transaction/',
             suffix: '',
         },
-    }),
-    Jungle4: ChainDefinition.from({
+    })
+
+    export const Jungle4 = ChainDefinition.from({
         id: '73e4385a2708e6d7048834fbc1079f2fabb17b3c125b146af438971e90716c4d',
         url: 'https://jungle4.greymass.com',
-    }),
-    KylinTestnet: ChainDefinition.from({
+    })
+
+    export const KylinTestnet = ChainDefinition.from({
         id: '5fff1dae8dc8e2fc4d5b23b2c7665c97f9e9d8edf2b6485a86ba311c25639191',
         url: 'https://api.kylin.alohaeos.com',
-    }),
-    Libre: ChainDefinition.from({
+    })
+
+    export const Libre = ChainDefinition.from({
         id: '38b1d7815474d0c60683ecbea321d723e83f5da6ae5f1c1f9fecc69d9ba96465',
         url: 'https://libre.greymass.com',
         explorer: {
             prefix: 'https://www.libreblocks.io/tx/',
             suffix: '',
         },
-    }),
-    LibreTestnet: ChainDefinition.from({
+    })
+
+    export const LibreTestnet = ChainDefinition.from({
         id: 'b64646740308df2ee06c6b72f34c0f7fa066d940e831f752db2006fcc2b78dee',
         url: 'https://libretestnet.greymass.com',
-    }),
-    Proton: ChainDefinition.from({
+    })
+
+    export const Proton = ChainDefinition.from({
         id: '384da888112027f0321850a169f737c33e53b388aad48b5adace4bab97f437e0',
         url: 'https://proton.greymass.com',
         explorer: {
             prefix: 'https://www.protonscan.io/transaction/',
             suffix: '',
         },
-    }),
-    ProtonTestnet: ChainDefinition.from({
+    })
+
+    export const ProtonTestnet = ChainDefinition.from({
         id: '71ee83bcf52142d61019d95f9cc5427ba6a0d7ff8accd9e2088ae2abeaf3d3dd',
         url: 'https://proton-testnet.greymass.com',
-    }),
-    Telos: ChainDefinition.from({
+    })
+
+    export const Telos = ChainDefinition.from<TelosAccountObject>({
         id: '4667b205c6838ef70ff7988f6e8257e8be0e1284a2f59699054a018f743b1d11',
         url: 'https://telos.greymass.com',
         explorer: {
             prefix: 'https://explorer.telos.net/transaction/',
             suffix: '',
         },
-    }),
-    TelosTestnet: ChainDefinition.from({
+    })
+
+    export const TelosTestnet = ChainDefinition.from<TelosAccountObject>({
         id: '1eaa0824707c8c16bd25145493bf062aecddfeb56c736f6ba6397f3195f33c9f',
         url: 'https://telostestnet.greymass.com',
-    }),
-    WAX: ChainDefinition.from({
+    })
+
+    export const WAX = ChainDefinition.from<WAXAccountObject>({
         id: '1064487b3cd1a897ce03ae5b6a865651747e2e152090f99c1d19d44e01aea5a4',
         url: 'https://wax.greymass.com',
         explorer: {
             prefix: 'https://waxblock.io/transaction/',
             suffix: '',
         },
-    }),
-    WAXTestnet: ChainDefinition.from({
+    })
+
+    export const WAXTestnet = ChainDefinition.from<WAXAccountObject>({
         id: 'f16b1833c747c43682f4386fca9cbb327929334a762755ebec17f6f23c9b8a12',
         url: 'https://waxtestnet.greymass.com',
-    }),
-    UX: ChainDefinition.from({
+    })
+
+    export const UX = ChainDefinition.from({
         id: '8fc6dce7942189f842170de953932b1f66693ad3788f766e777b6f9d22335c02',
         url: 'https://api.uxnetwork.io',
         explorer: {
             prefix: 'https://explorer.uxnetwork.io/tx/',
             suffix: '',
         },
-    }),
+    })
 }
 
 /**
