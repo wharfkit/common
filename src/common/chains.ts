@@ -13,40 +13,62 @@ import {Logo} from './logo'
 
 import type {ExplorerDefinitionType, LogoType} from './types'
 
+export interface ChainDefinitionArgs {
+    id: Checksum256Type
+    url: string
+    logo?: LogoType
+    explorer?: ExplorerDefinitionType
+    accountDataType?: typeof API.v1.AccountObject
+}
+
 /**
  * The information required to interact with a given chain.
  */
-@Struct.type('chain_definition')
 export class ChainDefinition<
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     AccountDataType extends API.v1.AccountObject = API.v1.AccountObject
-> extends Struct {
+> {
     /**
      * The chain ID.
      */
-    @Struct.field('checksum256') declare id: Checksum256
+    readonly id: Checksum256
 
     /**
      * The base URL of the chain's API endpoint (e.g. https://jungle4.greymass.com).
      */
-    @Struct.field('string') declare url: string
+    readonly url: string
 
     /**
      * The absolute URL(s) to the chain's logo.
      */
-    @Struct.field(Logo, {optional: true}) declare logo?: LogoType
+    readonly logo?: LogoType
 
     /**
      * The explorer definition for the chain.
      */
-    @Struct.field(ExplorerDefinition, {optional: true}) declare explorer?: ExplorerDefinitionType
+    explorer?: ExplorerDefinitionType
 
-    static from<T extends API.v1.AccountObject = API.v1.AccountObject>(data): ChainDefinition<T> {
-        return super.from({
+    /**
+     * The account data type for the chain.
+     */
+    accountDataType?: typeof API.v1.AccountObject
+
+    constructor(data: ChainDefinitionArgs) {
+        this.id = Checksum256.from(data.id)
+        this.url = data.url
+        this.logo = data.logo
+        this.explorer = data.explorer
+        this.accountDataType = data.accountDataType
+    }
+
+    static from<AccountDataType extends API.v1.AccountObject = API.v1.AccountObject>(
+        data: ChainDefinitionArgs
+    ): ChainDefinition<AccountDataType> {
+        return new ChainDefinition<AccountDataType>({
             ...data,
             explorer: data.explorer ? ExplorerDefinition.from(data.explorer) : undefined,
             logo: data.logo ? Logo.from(data.logo) : undefined,
-        }) as ChainDefinition<T>
+        })
     }
 
     get name() {
@@ -211,11 +233,13 @@ export namespace Chains {
             prefix: 'https://explorer.telos.net/transaction/',
             suffix: '',
         },
+        accountDataType: TelosAccountObject,
     })
 
     export const TelosTestnet = ChainDefinition.from<TelosAccountObject>({
         id: '1eaa0824707c8c16bd25145493bf062aecddfeb56c736f6ba6397f3195f33c9f',
         url: 'https://telostestnet.greymass.com',
+        accountDataType: TelosAccountObject,
     })
 
     export const WAX = ChainDefinition.from<WAXAccountObject>({
@@ -225,11 +249,13 @@ export namespace Chains {
             prefix: 'https://waxblock.io/transaction/',
             suffix: '',
         },
+        accountDataType: WAXAccountObject,
     })
 
     export const WAXTestnet = ChainDefinition.from<WAXAccountObject>({
         id: 'f16b1833c747c43682f4386fca9cbb327929334a762755ebec17f6f23c9b8a12',
         url: 'https://waxtestnet.greymass.com',
+        accountDataType: WAXAccountObject,
     })
 
     export const UX = ChainDefinition.from({

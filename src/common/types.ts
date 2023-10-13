@@ -10,7 +10,7 @@ export type LogoType = Logo | {dark: string; light: string} | string
 
 export type ExplorerDefinitionType =
     | ExplorerDefinition
-    | {prefix: string; suffix: string; url: (id: string) => string}
+    | {prefix: string; suffix: string; url?: (id: string) => string}
 
 export type ChainDefinitionType =
     | ChainDefinition
