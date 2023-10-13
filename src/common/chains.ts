@@ -11,7 +11,7 @@ import {
 import {ExplorerDefinition} from './explorer'
 import {Logo} from './logo'
 
-import type {ExplorerDefinitionType, LogoType} from './types'
+import type {ChainDefinitionType, ExplorerDefinitionType, LogoType} from './types'
 
 export interface ChainDefinitionArgs {
     id: Checksum256Type
@@ -91,6 +91,11 @@ export class ChainDefinition<
             }
         }
         return undefined
+    }
+
+    equals(def: ChainDefinitionType): boolean {
+        const other = ChainDefinition.from(def)
+        return this.id.equals(other.id) && this.url === other.url
     }
 }
 
