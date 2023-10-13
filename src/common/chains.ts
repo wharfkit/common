@@ -31,17 +31,17 @@ export class ChainDefinition<
     /**
      * The chain ID.
      */
-    readonly id: Checksum256
+    public id: Checksum256
 
     /**
      * The base URL of the chain's API endpoint (e.g. https://jungle4.greymass.com).
      */
-    readonly url: string
+    public url: string
 
     /**
      * The absolute URL(s) to the chain's logo.
      */
-    readonly logo?: LogoType
+    public logo?: LogoType
 
     /**
      * The explorer definition for the chain.
