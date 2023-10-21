@@ -18,3 +18,10 @@ jobs:
                   accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
                   command: |
                       r2 object put wharfkit/chain/eos.png -f assets/chain/eos.png
+                      r2 object put wharfkit/chain/fio.png -f assets/chain/fio.png
+                      r2 object put wharfkit/chain/jungle.png -f assets/chain/jungle.png
+                      r2 object put wharfkit/chain/libre.png -f assets/chain/libre.png
+                      r2 object put wharfkit/chain/proton.png -f assets/chain/proton.png
+                      r2 object put wharfkit/chain/telos.png -f assets/chain/telos.png
+                      r2 object put wharfkit/chain/ux.png -f assets/chain/ux.png
+                      r2 object put wharfkit/chain/wax.png -f assets/chain/wax.png
