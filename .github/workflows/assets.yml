@@ -15,5 +15,6 @@ jobs:
               uses: cloudflare/wrangler-action@v3
               with:
                   apiToken: ${{ secrets.CF_API_TOKEN }}
+                  accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
                   command: |
                       r2 object put wharfkit/chain/eos.png -f assets/chain/eos.png
