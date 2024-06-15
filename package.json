@@ -1,7 +1,7 @@
 {
     "name": "@wharfkit/common",
     "description": "Common data and functions shared across WharfKit packages",
-    "version": "1.2.0",
+    "version": "1.2.1",
     "homepage": "https://github.com/wharfkit/common",
     "license": "BSD-3-Clause",
     "main": "lib/common.js",
