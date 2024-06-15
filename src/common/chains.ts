@@ -19,6 +19,7 @@ export interface ChainDefinitionArgs {
     logo?: LogoType
     explorer?: ExplorerDefinitionType
     accountDataType?: typeof API.v1.AccountObject
+    coinType?: number
 }
 
 /**
@@ -52,6 +53,11 @@ export class ChainDefinition<
      * The account data type for the chain.
      */
     accountDataType?: typeof API.v1.AccountObject
+
+    /**
+     *  The SLIP-44 coin type for the chain.
+     */
+    coinType?: number
 
     constructor(data: ChainDefinitionArgs) {
         this.id = Checksum256.from(data.id)
@@ -173,6 +179,7 @@ export namespace Chains {
             prefix: 'https://bloks.io/transaction/',
             suffix: '',
         },
+        coinType: 194,
     })
 
     export const FIO = ChainDefinition.from({
@@ -182,6 +189,7 @@ export namespace Chains {
             prefix: 'https://fio.bloks.io/transaction/',
             suffix: '',
         },
+        coinType: 235,
     })
 
     export const FIOTestnet = ChainDefinition.from({
@@ -196,11 +204,13 @@ export namespace Chains {
     export const Jungle4 = ChainDefinition.from({
         id: '73e4385a2708e6d7048834fbc1079f2fabb17b3c125b146af438971e90716c4d',
         url: 'https://jungle4.greymass.com',
+        coinType: 194,
     })
 
     export const KylinTestnet = ChainDefinition.from({
         id: '5fff1dae8dc8e2fc4d5b23b2c7665c97f9e9d8edf2b6485a86ba311c25639191',
         url: 'https://api.kylin.alohaeos.com',
+        coinType: 194,
     })
 
     export const Libre = ChainDefinition.from({
@@ -239,12 +249,14 @@ export namespace Chains {
             suffix: '',
         },
         accountDataType: TelosAccountObject,
+        coinType: 977,
     })
 
     export const TelosTestnet = ChainDefinition.from<TelosAccountObject>({
         id: '1eaa0824707c8c16bd25145493bf062aecddfeb56c736f6ba6397f3195f33c9f',
         url: 'https://telostestnet.greymass.com',
         accountDataType: TelosAccountObject,
+        coinType: 977,
     })
 
     export const WAX = ChainDefinition.from<WAXAccountObject>({
@@ -255,12 +267,14 @@ export namespace Chains {
             suffix: '',
         },
         accountDataType: WAXAccountObject,
+        coinType: 14001,
     })
 
     export const WAXTestnet = ChainDefinition.from<WAXAccountObject>({
         id: 'f16b1833c747c43682f4386fca9cbb327929334a762755ebec17f6f23c9b8a12',
         url: 'https://waxtestnet.greymass.com',
         accountDataType: WAXAccountObject,
+        coinType: 14001,
     })
 
     export const UX = ChainDefinition.from({
