@@ -65,6 +65,7 @@ export class ChainDefinition<
         this.logo = data.logo
         this.explorer = data.explorer
         this.accountDataType = data.accountDataType
+        this.coinType = data.coinType
     }
 
     static from<AccountDataType extends API.v1.AccountObject = API.v1.AccountObject>(
