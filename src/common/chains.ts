@@ -1,5 +1,6 @@
 import {
     API,
+    Asset,
     Checksum256,
     Checksum256Type,
     Float64,
@@ -20,6 +21,7 @@ export interface ChainDefinitionArgs {
     explorer?: ExplorerDefinitionType
     accountDataType?: typeof API.v1.AccountObject
     coinType?: number
+    systemToken: Asset.SymbolType
 }
 
 /**
@@ -59,6 +61,11 @@ export class ChainDefinition<
      */
     coinType?: number
 
+    /**
+     * The system token symbol for the chain.
+     */
+    systemToken: Asset.Symbol
+
     constructor(data: ChainDefinitionArgs) {
         this.id = Checksum256.from(data.id)
         this.url = data.url
@@ -66,6 +73,7 @@ export class ChainDefinition<
         this.explorer = data.explorer
         this.accountDataType = data.accountDataType
         this.coinType = data.coinType
+        this.systemToken = Asset.Symbol.from(data.systemToken)
     }
 
     static from<AccountDataType extends API.v1.AccountObject = API.v1.AccountObject>(
@@ -181,6 +189,7 @@ export namespace Chains {
             suffix: '',
         },
         coinType: 194,
+        systemToken: Asset.Symbol.from('4,EOS'),
     })
 
     export const FIO = ChainDefinition.from({
@@ -191,6 +200,7 @@ export namespace Chains {
             suffix: '',
         },
         coinType: 235,
+        systemToken: Asset.Symbol.from('9,FIO'),
     })
 
     export const FIOTestnet = ChainDefinition.from({
@@ -200,18 +210,21 @@ export namespace Chains {
             prefix: 'https://fio-test.bloks.io/transaction/',
             suffix: '',
         },
+        systemToken: Asset.Symbol.from('9,FIO'),
     })
 
     export const Jungle4 = ChainDefinition.from({
         id: '73e4385a2708e6d7048834fbc1079f2fabb17b3c125b146af438971e90716c4d',
         url: 'https://jungle4.greymass.com',
         coinType: 194,
+        systemToken: Asset.Symbol.from('4,EOS'),
     })
 
     export const KylinTestnet = ChainDefinition.from({
         id: '5fff1dae8dc8e2fc4d5b23b2c7665c97f9e9d8edf2b6485a86ba311c25639191',
         url: 'https://kylintestnet.greymass.com',
         coinType: 194,
+        systemToken: Asset.Symbol.from('4,EOS'),
     })
 
     export const Libre = ChainDefinition.from({
@@ -221,11 +234,13 @@ export namespace Chains {
             prefix: 'https://www.libreblocks.io/tx/',
             suffix: '',
         },
+        systemToken: Asset.Symbol.from('4,LIBRE'),
     })
 
     export const LibreTestnet = ChainDefinition.from({
         id: 'b64646740308df2ee06c6b72f34c0f7fa066d940e831f752db2006fcc2b78dee',
         url: 'https://libretestnet.greymass.com',
+        systemToken: Asset.Symbol.from('4,LIBRE'),
     })
 
     export const Proton = ChainDefinition.from({
@@ -235,11 +250,13 @@ export namespace Chains {
             prefix: 'https://www.protonscan.io/transaction/',
             suffix: '',
         },
+        systemToken: Asset.Symbol.from('4,XPR'),
     })
 
     export const ProtonTestnet = ChainDefinition.from({
         id: '71ee83bcf52142d61019d95f9cc5427ba6a0d7ff8accd9e2088ae2abeaf3d3dd',
         url: 'https://proton-testnet.greymass.com',
+        systemToken: Asset.Symbol.from('4,XPR'),
     })
 
     export const Telos = ChainDefinition.from<TelosAccountObject>({
@@ -251,6 +268,7 @@ export namespace Chains {
         },
         accountDataType: TelosAccountObject,
         coinType: 977,
+        systemToken: Asset.Symbol.from('4,TLOS'),
     })
 
     export const TelosTestnet = ChainDefinition.from<TelosAccountObject>({
@@ -258,6 +276,7 @@ export namespace Chains {
         url: 'https://telostestnet.greymass.com',
         accountDataType: TelosAccountObject,
         coinType: 977,
+        systemToken: Asset.Symbol.from('4,TLOS'),
     })
 
     export const WAX = ChainDefinition.from<WAXAccountObject>({
@@ -269,6 +288,7 @@ export namespace Chains {
         },
         accountDataType: WAXAccountObject,
         coinType: 14001,
+        systemToken: Asset.Symbol.from('8,WAX'),
     })
 
     export const WAXTestnet = ChainDefinition.from<WAXAccountObject>({
@@ -276,6 +296,7 @@ export namespace Chains {
         url: 'https://waxtestnet.greymass.com',
         accountDataType: WAXAccountObject,
         coinType: 14001,
+        systemToken: Asset.Symbol.from('8,WAX'),
     })
 
     export const UX = ChainDefinition.from({
@@ -285,6 +306,7 @@ export namespace Chains {
             prefix: 'https://explorer.uxnetwork.io/tx/',
             suffix: '',
         },
+        systemToken: Asset.Symbol.from('4,UTX'),
     })
 }
 
