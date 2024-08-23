@@ -1,4 +1,4 @@
-import {Asset, Checksum256Type} from '@wharfkit/antelope'
+import {Asset, Checksum256Type, NameType} from '@wharfkit/antelope'
 
 import {ChainDefinition} from './chains'
 import {ExplorerDefinition} from './explorer'
@@ -19,7 +19,8 @@ export type ChainDefinitionType =
           url: string
           explorer?: ExplorerDefinitionType
           logo?: LogoType
-          systemToken: Asset.SymbolType
+          systemTokenSymbol?: Asset.SymbolType
+          systemTokenContract?: NameType
       }
 
 export type LocaleDefinitions = Record<string, any>

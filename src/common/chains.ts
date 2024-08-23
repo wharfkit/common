@@ -5,6 +5,7 @@ import {
     Checksum256Type,
     Float64,
     Int64,
+    NameType,
     Struct,
     TimePoint,
 } from '@wharfkit/antelope'
@@ -13,6 +14,7 @@ import {ExplorerDefinition} from './explorer'
 import {Logo} from './logo'
 
 import type {ChainDefinitionType, ExplorerDefinitionType, LogoType} from './types'
+import {TokenIdentifier} from './token'
 
 export interface ChainDefinitionArgs {
     id: Checksum256Type
@@ -21,7 +23,9 @@ export interface ChainDefinitionArgs {
     explorer?: ExplorerDefinitionType
     accountDataType?: typeof API.v1.AccountObject
     coinType?: number
-    systemToken: Asset.SymbolType
+    systemToken?: TokenIdentifier
+    systemTokenSymbol?: Asset.SymbolType
+    systemTokenContract?: NameType
 }
 
 /**
@@ -64,7 +68,7 @@ export class ChainDefinition<
     /**
      * The system token symbol for the chain.
      */
-    systemToken: Asset.Symbol
+    systemToken?: TokenIdentifier
 
     constructor(data: ChainDefinitionArgs) {
         this.id = Checksum256.from(data.id)
@@ -73,7 +77,16 @@ export class ChainDefinition<
         this.explorer = data.explorer
         this.accountDataType = data.accountDataType
         this.coinType = data.coinType
-        this.systemToken = Asset.Symbol.from(data.systemToken)
+        if (data.systemTokenContract && data.systemTokenSymbol) {
+            this.systemToken = TokenIdentifier.from({
+                chain: this.id,
+                contract: data.systemTokenContract,
+                symbol: data.systemTokenSymbol,
+            })
+        }
+        if (data.systemToken) {
+            this.systemToken = data.systemToken
+        }
     }
 
     static from<AccountDataType extends API.v1.AccountObject = API.v1.AccountObject>(
