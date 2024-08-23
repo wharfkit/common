@@ -142,9 +142,11 @@ export type ChainIndices =
     | 'ProtonTestnet'
     | 'Telos'
     | 'TelosTestnet'
+    | 'UX'
     | 'WAX'
     | 'WAXTestnet'
-    | 'UX'
+    | 'XPR'
+    | 'XPRTestnet'
 
 /**
  * List of human readable chain names based on the ChainIndices type.
@@ -157,13 +159,15 @@ export const ChainNames: Record<ChainIndices, string> = {
     KylinTestnet: 'Kylin (Testnet)',
     Libre: 'Libre',
     LibreTestnet: 'Libre (Testnet)',
-    Proton: 'Proton',
-    ProtonTestnet: 'Proton (Testnet)',
+    Proton: 'XPR Network',
+    ProtonTestnet: 'XPR Network (Testnet)',
     Telos: 'Telos',
     TelosTestnet: 'Telos (Testnet)',
+    UX: 'UX Network',
     WAX: 'WAX',
     WAXTestnet: 'WAX (Testnet)',
-    UX: 'UX Network',
+    XPR: 'XPR Network',
+    XPRTestnet: 'XPR Network (Testnet)',
 }
 
 @Struct.type('telos_account_voter_info')
@@ -197,91 +201,77 @@ export namespace Chains {
     export const EOS = ChainDefinition.from({
         id: 'aca376f206b8fc25a6ed44dbdc66547c36c6c33e3a119ffbeaef943642f0e906',
         url: 'https://eos.greymass.com',
-        explorer: {
-            prefix: 'https://bloks.io/transaction/',
-            suffix: '',
-        },
         coinType: 194,
-        systemToken: Asset.Symbol.from('4,EOS'),
+        systemTokenSymbol: '4,EOS',
+        systemTokenContract: 'eosio.token',
     })
 
     export const FIO = ChainDefinition.from({
         id: '21dcae42c0182200e93f954a074011f9048a7624c6fe81d3c9541a614a88bd1c',
         url: 'https://fio.greymass.com',
-        explorer: {
-            prefix: 'https://fio.bloks.io/transaction/',
-            suffix: '',
-        },
         coinType: 235,
-        systemToken: Asset.Symbol.from('9,FIO'),
+        systemTokenSymbol: '9,FIO',
+        systemTokenContract: 'eosio.token',
     })
 
     export const FIOTestnet = ChainDefinition.from({
         id: 'b20901380af44ef59c5918439a1f9a41d83669020319a80574b804a5f95cbd7e',
         url: 'https://fiotestnet.greymass.com',
-        explorer: {
-            prefix: 'https://fio-test.bloks.io/transaction/',
-            suffix: '',
-        },
-        systemToken: Asset.Symbol.from('9,FIO'),
+        systemTokenSymbol: '9,FIO',
+        systemTokenContract: 'fio.token',
     })
 
     export const Jungle4 = ChainDefinition.from({
         id: '73e4385a2708e6d7048834fbc1079f2fabb17b3c125b146af438971e90716c4d',
         url: 'https://jungle4.greymass.com',
         coinType: 194,
-        systemToken: Asset.Symbol.from('4,EOS'),
+        systemTokenSymbol: '4,EOS',
+        systemTokenContract: 'eosio.token',
     })
 
     export const KylinTestnet = ChainDefinition.from({
         id: '5fff1dae8dc8e2fc4d5b23b2c7665c97f9e9d8edf2b6485a86ba311c25639191',
         url: 'https://kylintestnet.greymass.com',
         coinType: 194,
-        systemToken: Asset.Symbol.from('4,EOS'),
+        systemTokenSymbol: '4,EOS',
+        systemTokenContract: 'eosio.token',
     })
 
     export const Libre = ChainDefinition.from({
         id: '38b1d7815474d0c60683ecbea321d723e83f5da6ae5f1c1f9fecc69d9ba96465',
         url: 'https://libre.greymass.com',
-        explorer: {
-            prefix: 'https://www.libreblocks.io/tx/',
-            suffix: '',
-        },
-        systemToken: Asset.Symbol.from('4,LIBRE'),
+        systemTokenSymbol: '4,LIBRE',
+        systemTokenContract: 'eosio.token',
     })
 
     export const LibreTestnet = ChainDefinition.from({
         id: 'b64646740308df2ee06c6b72f34c0f7fa066d940e831f752db2006fcc2b78dee',
         url: 'https://libretestnet.greymass.com',
-        systemToken: Asset.Symbol.from('4,LIBRE'),
+        systemTokenSymbol: '4,LIBRE',
+        systemTokenContract: 'eosio.token',
     })
 
     export const Proton = ChainDefinition.from({
         id: '384da888112027f0321850a169f737c33e53b388aad48b5adace4bab97f437e0',
         url: 'https://proton.greymass.com',
-        explorer: {
-            prefix: 'https://www.protonscan.io/transaction/',
-            suffix: '',
-        },
-        systemToken: Asset.Symbol.from('4,XPR'),
+        systemTokenSymbol: '4,XPR',
+        systemTokenContract: 'eosio.token',
     })
 
     export const ProtonTestnet = ChainDefinition.from({
         id: '71ee83bcf52142d61019d95f9cc5427ba6a0d7ff8accd9e2088ae2abeaf3d3dd',
         url: 'https://proton-testnet.greymass.com',
-        systemToken: Asset.Symbol.from('4,XPR'),
+        systemTokenSymbol: '4,XPR',
+        systemTokenContract: 'eosio.token',
     })
 
     export const Telos = ChainDefinition.from<TelosAccountObject>({
         id: '4667b205c6838ef70ff7988f6e8257e8be0e1284a2f59699054a018f743b1d11',
         url: 'https://telos.greymass.com',
-        explorer: {
-            prefix: 'https://explorer.telos.net/transaction/',
-            suffix: '',
-        },
         accountDataType: TelosAccountObject,
         coinType: 977,
-        systemToken: Asset.Symbol.from('4,TLOS'),
+        systemTokenSymbol: '4,TLOS',
+        systemTokenContract: 'eosio.token',
     })
 
     export const TelosTestnet = ChainDefinition.from<TelosAccountObject>({
@@ -289,19 +279,24 @@ export namespace Chains {
         url: 'https://telostestnet.greymass.com',
         accountDataType: TelosAccountObject,
         coinType: 977,
-        systemToken: Asset.Symbol.from('4,TLOS'),
+        systemTokenSymbol: '4,TLOS',
+        systemTokenContract: 'eosio.token',
+    })
+
+    export const UX = ChainDefinition.from({
+        id: '8fc6dce7942189f842170de953932b1f66693ad3788f766e777b6f9d22335c02',
+        url: 'https://api.uxnetwork.io',
+        systemTokenSymbol: '4,UTX',
+        systemTokenContract: 'eosio.token',
     })
 
     export const WAX = ChainDefinition.from<WAXAccountObject>({
         id: '1064487b3cd1a897ce03ae5b6a865651747e2e152090f99c1d19d44e01aea5a4',
         url: 'https://wax.greymass.com',
-        explorer: {
-            prefix: 'https://waxblock.io/transaction/',
-            suffix: '',
-        },
         accountDataType: WAXAccountObject,
         coinType: 14001,
-        systemToken: Asset.Symbol.from('8,WAX'),
+        systemTokenSymbol: '8,WAX',
+        systemTokenContract: 'eosio.token',
     })
 
     export const WAXTestnet = ChainDefinition.from<WAXAccountObject>({
@@ -309,17 +304,22 @@ export namespace Chains {
         url: 'https://waxtestnet.greymass.com',
         accountDataType: WAXAccountObject,
         coinType: 14001,
-        systemToken: Asset.Symbol.from('8,WAX'),
+        systemTokenSymbol: '8,WAX',
+        systemTokenContract: 'eosio.token',
     })
 
-    export const UX = ChainDefinition.from({
-        id: '8fc6dce7942189f842170de953932b1f66693ad3788f766e777b6f9d22335c02',
-        url: 'https://api.uxnetwork.io',
-        explorer: {
-            prefix: 'https://explorer.uxnetwork.io/tx/',
-            suffix: '',
-        },
-        systemToken: Asset.Symbol.from('4,UTX'),
+    export const XPR = ChainDefinition.from({
+        id: '384da888112027f0321850a169f737c33e53b388aad48b5adace4bab97f437e0',
+        url: 'https://proton.greymass.com',
+        systemTokenSymbol: '4,XPR',
+        systemTokenContract: 'eosio.token',
+    })
+
+    export const XPRTestnet = ChainDefinition.from({
+        id: '71ee83bcf52142d61019d95f9cc5427ba6a0d7ff8accd9e2088ae2abeaf3d3dd',
+        url: 'https://proton-testnet.greymass.com',
+        systemTokenSymbol: '4,XPR',
+        systemTokenContract: 'eosio.token',
     })
 }
 
@@ -334,8 +334,8 @@ export const chainIdsToIndices: Map<Checksum256Type, ChainIndices> = new Map([
     ['5fff1dae8dc8e2fc4d5b23b2c7665c97f9e9d8edf2b6485a86ba311c25639191', 'KylinTestnet'],
     ['38b1d7815474d0c60683ecbea321d723e83f5da6ae5f1c1f9fecc69d9ba96465', 'Libre'],
     ['b64646740308df2ee06c6b72f34c0f7fa066d940e831f752db2006fcc2b78dee', 'LibreTestnet'],
-    ['384da888112027f0321850a169f737c33e53b388aad48b5adace4bab97f437e0', 'Proton'],
-    ['71ee83bcf52142d61019d95f9cc5427ba6a0d7ff8accd9e2088ae2abeaf3d3dd', 'ProtonTestnet'],
+    ['384da888112027f0321850a169f737c33e53b388aad48b5adace4bab97f437e0', 'XPR'],
+    ['71ee83bcf52142d61019d95f9cc5427ba6a0d7ff8accd9e2088ae2abeaf3d3dd', 'XPRTestnet'],
     ['4667b205c6838ef70ff7988f6e8257e8be0e1284a2f59699054a018f743b1d11', 'Telos'],
     ['1eaa0824707c8c16bd25145493bf062aecddfeb56c736f6ba6397f3195f33c9f', 'TelosTestnet'],
     ['8fc6dce7942189f842170de953932b1f66693ad3788f766e777b6f9d22335c02', 'UX'],
@@ -377,11 +377,11 @@ export const chainLogos: Map<Checksum256Type, LogoType> = new Map([
     ],
     [
         '384da888112027f0321850a169f737c33e53b388aad48b5adace4bab97f437e0',
-        'https://assets.wharfkit.com/chain/proton.png',
+        'https://assets.wharfkit.com/chain/xprnetwork.png',
     ],
     [
         '71ee83bcf52142d61019d95f9cc5427ba6a0d7ff8accd9e2088ae2abeaf3d3dd',
-        'https://assets.wharfkit.com/chain/proton.png',
+        'https://assets.wharfkit.com/chain/xprnetwork.png',
     ],
     [
         '4667b205c6838ef70ff7988f6e8257e8be0e1284a2f59699054a018f743b1d11',
