@@ -337,7 +337,6 @@ export namespace Chains {
  * A list of chain IDs and their ChainIndices for reference lookups
  */
 export const chainIdsToIndices: Map<Checksum256Type, ChainIndices> = new Map([
-    ['aca376f206b8fc25a6ed44dbdc66547c36c6c33e3a119ffbeaef943642f0e906', 'EOS'],
     ['21dcae42c0182200e93f954a074011f9048a7624c6fe81d3c9541a614a88bd1c', 'FIO'],
     ['b20901380af44ef59c5918439a1f9a41d83669020319a80574b804a5f95cbd7e', 'FIOTestnet'],
     ['73e4385a2708e6d7048834fbc1079f2fabb17b3c125b146af438971e90716c4d', 'Jungle4'],
@@ -358,10 +357,6 @@ export const chainIdsToIndices: Map<Checksum256Type, ChainIndices> = new Map([
  * A list of known chain IDs and their logos.
  */
 export const chainLogos: Map<Checksum256Type, LogoType> = new Map([
-    [
-        'aca376f206b8fc25a6ed44dbdc66547c36c6c33e3a119ffbeaef943642f0e906',
-        'https://assets.wharfkit.com/chain/eos.png',
-    ],
     [
         '21dcae42c0182200e93f954a074011f9048a7624c6fe81d3c9541a614a88bd1c',
         'https://assets.wharfkit.com/chain/fio.png',
