@@ -296,8 +296,8 @@ export namespace Chains {
         id: 'aca376f206b8fc25a6ed44dbdc66547c36c6c33e3a119ffbeaef943642f0e906',
         url: 'https://eos.greymass.com',
         coinType: 194,
-        systemTokenSymbol: '4,EOS',
-        systemTokenContract: 'eosio.token',
+        systemTokenSymbol: '4,A',
+        systemTokenContract: 'core.vaulta',
     })
 
     export const WAX = ChainDefinition.from<WAXAccountObject>({
