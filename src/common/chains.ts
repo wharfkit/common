@@ -142,6 +142,7 @@ export type ChainIndices =
     | 'ProtonTestnet'
     | 'Telos'
     | 'TelosTestnet'
+    | 'Vaulta'
     | 'UX'
     | 'WAX'
     | 'WAXTestnet'
@@ -164,6 +165,7 @@ export const ChainNames: Record<ChainIndices, string> = {
     Telos: 'Telos',
     TelosTestnet: 'Telos (Testnet)',
     UX: 'UX Network',
+    Vaulta: 'Vaulta',
     WAX: 'WAX',
     WAXTestnet: 'WAX (Testnet)',
     XPR: 'XPR Network',
@@ -290,6 +292,14 @@ export namespace Chains {
         systemTokenContract: 'eosio.token',
     })
 
+    export const Vaulta = ChainDefinition.from({
+        id: 'aca376f206b8fc25a6ed44dbdc66547c36c6c33e3a119ffbeaef943642f0e906',
+        url: 'https://eos.greymass.com',
+        coinType: 194,
+        systemTokenSymbol: '4,A',
+        systemTokenContract: 'core.vaulta',
+    })
+
     export const WAX = ChainDefinition.from<WAXAccountObject>({
         id: '1064487b3cd1a897ce03ae5b6a865651747e2e152090f99c1d19d44e01aea5a4',
         url: 'https://wax.greymass.com',
@@ -327,7 +337,6 @@ export namespace Chains {
  * A list of chain IDs and their ChainIndices for reference lookups
  */
 export const chainIdsToIndices: Map<Checksum256Type, ChainIndices> = new Map([
-    ['aca376f206b8fc25a6ed44dbdc66547c36c6c33e3a119ffbeaef943642f0e906', 'EOS'],
     ['21dcae42c0182200e93f954a074011f9048a7624c6fe81d3c9541a614a88bd1c', 'FIO'],
     ['b20901380af44ef59c5918439a1f9a41d83669020319a80574b804a5f95cbd7e', 'FIOTestnet'],
     ['73e4385a2708e6d7048834fbc1079f2fabb17b3c125b146af438971e90716c4d', 'Jungle4'],
@@ -339,6 +348,7 @@ export const chainIdsToIndices: Map<Checksum256Type, ChainIndices> = new Map([
     ['4667b205c6838ef70ff7988f6e8257e8be0e1284a2f59699054a018f743b1d11', 'Telos'],
     ['1eaa0824707c8c16bd25145493bf062aecddfeb56c736f6ba6397f3195f33c9f', 'TelosTestnet'],
     ['8fc6dce7942189f842170de953932b1f66693ad3788f766e777b6f9d22335c02', 'UX'],
+    ['aca376f206b8fc25a6ed44dbdc66547c36c6c33e3a119ffbeaef943642f0e906', 'Vaulta'],
     ['1064487b3cd1a897ce03ae5b6a865651747e2e152090f99c1d19d44e01aea5a4', 'WAX'],
     ['f16b1833c747c43682f4386fca9cbb327929334a762755ebec17f6f23c9b8a12', 'WAXTestnet'],
 ])
@@ -347,10 +357,6 @@ export const chainIdsToIndices: Map<Checksum256Type, ChainIndices> = new Map([
  * A list of known chain IDs and their logos.
  */
 export const chainLogos: Map<Checksum256Type, LogoType> = new Map([
-    [
-        'aca376f206b8fc25a6ed44dbdc66547c36c6c33e3a119ffbeaef943642f0e906',
-        'https://assets.wharfkit.com/chain/eos.png',
-    ],
     [
         '21dcae42c0182200e93f954a074011f9048a7624c6fe81d3c9541a614a88bd1c',
         'https://assets.wharfkit.com/chain/fio.png',
@@ -390,6 +396,10 @@ export const chainLogos: Map<Checksum256Type, LogoType> = new Map([
     [
         '1eaa0824707c8c16bd25145493bf062aecddfeb56c736f6ba6397f3195f33c9f',
         'https://assets.wharfkit.com/chain/telos.png',
+    ],
+    [
+        'aca376f206b8fc25a6ed44dbdc66547c36c6c33e3a119ffbeaef943642f0e906',
+        'https://assets.wharfkit.com/chain/vaulta.png',
     ],
     [
         '8fc6dce7942189f842170de953932b1f66693ad3788f766e777b6f9d22335c02',
